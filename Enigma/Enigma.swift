@@ -160,11 +160,13 @@ struct Enigma {
             return ""
         }
         
-        let prepared = message.split(by: 3)
+        let prepared = message.lowercased()
+        
+        let crypedArray = prepared.split(by: 3)
         
         var result = ""
         
-        for converted in prepared {
+        for converted in crypedArray {
             if let original = self.crypto.getKey(for: converted) {
                 result += original
             }
