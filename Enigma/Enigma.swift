@@ -19,7 +19,25 @@ struct Enigma {
     // MARK: - TASK 1
     // Get the current day name in the form of the enumeration above. Example: "Tuesday" would be Day.Tuesday
     func getCurrentDay() -> Day {
-        return .Unknown
+        let dayofWeek = Calendar.current.dateComponents([.weekday], from: Date()).weekday
+        
+        if dayofWeek == 1 {
+            return Day.Monday
+        } else if dayofWeek == 2 {
+            return Day.Tuesday
+        } else if dayofWeek == 3 {
+            return Day.Wednesday
+        } else if dayofWeek == 4 {
+            return Day.Thursday
+        } else if dayofWeek == 5 {
+            return Day.Friday
+        } else if dayofWeek == 6 {
+            return Day.Saturday
+        } else if dayofWeek == 7 {
+            return Day.Sunday
+        }
+        
+        return Day.Unknown
     }
     
     // MARK: - TASK 2
@@ -29,8 +47,77 @@ struct Enigma {
     // encrypted representations as the values.
     
     mutating func loadEncryptionKeys(for day: Day) {
+        self.crypto = [:]
 
+        var fileName = "Monday"
+
+        if day == .Tuesday {
+            fileName = "Tuesday"
+        } else if day == .Wednesday {
+            fileName = "Wednesday"
+        } else if day == .Thursday {
+            fileName = "Thursday"
+        } else if day == .Friday {
+            fileName = "Friday"
+        } else if day == .Saturday {
+            fileName = "Saturday"
+        } else if day == .Sunday {
+            fileName = "Sunday"
+        }
+
+        if let filepath = Bundle.main.path(forResource: fileName, ofType: "txt") {
+            do {
+                let contents = try String(contentsOfFile: filepath)
+                let dataArray = contents.components(separatedBy: "\n")
+
+                for pair in dataArray {
+                    let pairArray = pair.components(separatedBy: ";")
+                    self.crypto[pairArray[0]] = pairArray[1]
+                }
+
+            } catch {
+                // contents could not be loaded
+            }
+        }
     }
+//    func loadEncryptionKeys(for day: Day) {
+//        var crypto = [String: String]()
+//
+//        var fileName = "Monday"
+//
+//        if day == .Tuesday {
+//            fileName = "Tuesday"
+//        } else if day == .Wednesday {
+//            fileName = "Wednesday"
+//        } else if day == .Thursday {
+//            fileName = "Thursday"
+//        } else if day == .Friday {
+//            fileName = "Friday"
+//        } else if day == .Saturday {
+//            fileName = "Saturday"
+//        } else if day == .Sunday {
+//            fileName = "Sunday"
+//        }
+//
+//        if let filepath = Bundle.main.path(forResource: fileName, ofType: "txt") {
+//            do {
+//                let contents = try String(contentsOfFile: filepath)
+//                let dataArray = contents.components(separatedBy: "\n")
+//
+//                for pair in dataArray {
+//                    let pairArray = pair.components(separatedBy: ";")
+//                    crypto[pairArray[0]] = pairArray[1]
+//
+//
+//                }
+//
+//                print(crypto)
+//
+//            } catch {
+//                // contents could not be loaded
+//            }
+//        }
+//    }
     
     // MARK: - TASK 3
     // Fill out the encryption function below which accepts a String and returns an encrypted version of that
@@ -45,7 +132,17 @@ struct Enigma {
     // Example Devsk..iller should only encrypt 'devskiller' and ignore the .. in the middle.
     
     mutating func encrypt(message: String) -> String {
-        return ""
+        let prepared = message.lowercased().replacingOccurrences(of: " ", with: "-")
+        
+        var result = ""
+        
+        for cha in prepared {
+            if let converted = self.crypto["\(cha)"] {
+                result += converted
+            }
+        }
+        
+        return result
     }
     
     // MARK: - TASK 4
@@ -58,6 +155,8 @@ struct Enigma {
     
     func decrypt(message: String) -> String {
         let errorMessage = "MESSAGE INCORRECTLY ENCRYPTED" //PLEASE DO NOT MODIFY THIS CONSTANT's VALUE
+        
+        
         return ""
     }
     
