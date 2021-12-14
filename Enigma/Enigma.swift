@@ -156,9 +156,39 @@ struct Enigma {
     func decrypt(message: String) -> String {
         let errorMessage = "MESSAGE INCORRECTLY ENCRYPTED" //PLEASE DO NOT MODIFY THIS CONSTANT's VALUE
         
+        if message.count % 3 != 0 {
+            return ""
+        }
         
-        return ""
+        let prepared = message.split(by: 3)
+        
+        var result = ""
+        
+        for converted in prepared {
+            if let original = self.crypto.getKey(for: converted) {
+                result += original
+            }
+        }
+        
+        result = result.replacingOccurrences(of: "-", with: " ")
+        
+        return result
     }
     
+}
+
+extension String {
+    func split(by length: Int) -> [String] {
+        var startIndex = self.startIndex
+        var results = [Substring]()
+
+        while startIndex < self.endIndex {
+            let endIndex = self.index(startIndex, offsetBy: length, limitedBy: self.endIndex) ?? self.endIndex
+            results.append(self[startIndex..<endIndex])
+            startIndex = endIndex
+        }
+
+        return results.map { String($0) }
+    }
 }
 
