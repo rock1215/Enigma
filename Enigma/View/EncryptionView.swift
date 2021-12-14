@@ -100,14 +100,14 @@ final class EncryptionView: UIStackView {
 
         loadedKeysLbl.text = "Keys loaded today: \(self.enigma.getCurrentDay().rawValue)" // Fix to show the missing day name of the loaded key
         
-        self.addSubview(self.subStackView)
+        self.addArrangedSubview(self.subStackView)(
         
-        self.subStackView.addSubview(self.loadedKeysLbl)
-        self.subStackView.addSubview(self.messageTxtView)
-        self.subStackView.addSubview(self.encryptDecryptCtrl)
-        self.subStackView.addSubview(self.encryptDecryptButton)
+        self.subStackView.addArrangedSubview(self.loadedKeysLbl)
+        self.subStackView.addArrangedSubview(self.messageTxtView)
+        self.subStackView.addArrangedSubview(self.encryptDecryptCtrl)
+        self.subStackView.addArrangedSubview(self.encryptDecryptButton)
         
-        self.addSubview(self.processedMessageTxtView)
+        self.addArrangedSubview(self.processedMessageTxtView)
     }
     
     
