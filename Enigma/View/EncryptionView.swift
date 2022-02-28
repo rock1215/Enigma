@@ -117,16 +117,16 @@ final class EncryptionView: UIStackView {
     // 6 - Fill the function below to update the title of the encryptDecryptButton depending on what is selected on the encryptDecryptCtrl UISegmentedControl. If the selected item is "ENCRYPT" the title of the button should be also "ENCRYPT", else if "DECRYPT" is selected then "DECRYPT" should be the button's title.
     @objc func encryptDecryptChanged(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
-            self.encryptDecryptButton.setTitle("Encrypt", for: .normal)
+            self.encryptDecryptButton.setTitle("ENCRYPT", for: .normal)
         } else if sender.selectedSegmentIndex == 1 {
-            self.encryptDecryptButton.setTitle("Decrypt", for: .normal)
+            self.encryptDecryptButton.setTitle("DECRYPT", for: .normal)
         }
     }
     
     //MARK: - TASK 7
     // 7 - Fill in the function below in order to process the message from messageTxtView it should either encrypt or decrypt depending on the selection in the segmented control. The output needs to be shown in the processedMessageTxtView
     @objc func processMessage() {
-        if self.encryptDecryptButton.title(for: .normal) == "Encrypt" {
+        if self.encryptDecryptButton.title(for: .normal) == "ENCRYPT" {
             self.processedMessageTxtView.text = self.enigma.encrypt(message: self.messageTxtView.text)
         } else {
             self.processedMessageTxtView.text = self.enigma.decrypt(message: self.messageTxtView.text)

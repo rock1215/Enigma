@@ -59,13 +59,16 @@ class EnigmaUITests: XCTestCase {
     
     func test_loadedKeysLabel_containsDayName() {
         let trimmedLabel = loadedKeysLbl.label.replacingOccurrences(of: "Keys loaded today: ", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
+        print(trimmedLabel)
         XCTAssertTrue(days.contains(trimmedLabel), "Loaded keys label does not contain day name ")
     }
     
     func test_encryptDecryptButton_changesTitle() {
         XCTAssertEqual(encryptDecryptButton.label, "ENCRYPT")
+        print(encryptDecryptButton.label)
         encryptDecryptCtrl.buttons["DECRYPT"].tap()
-        XCTAssertEqual(encryptDecryptButton.label, "DECRYPT")
+        print(encryptDecryptButton.label)
+        XCTAssertEqual(encryptDecryptButton.label, "DECRYPT")        
     }
     
     func test_encryptingMessageWorks() {
